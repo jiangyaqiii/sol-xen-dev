@@ -3,3 +3,5 @@
 
 
 2、修改sol-xen-dev/soldev.py中的keypair
+
+3、python3 sol-xen-dev/soldev.py EVM地址
