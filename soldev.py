@@ -11,7 +11,7 @@ def download_file(url, filename):
 
 def create_or_verify_wallet():
     """Create a new Solana wallet or verify existing wallet's balance"""
-    keypair_path = '/root/.config/solana/id.json'
+    keypair_path = '/Users/DONB/.config/solana/id.json'
     min_balance = 1.0  # Minimum balance in SOL required to skip creating a new wallet
 
     # Check if the keypair file exists and get balance
@@ -27,7 +27,10 @@ def create_or_verify_wallet():
             print("Failed to parse balance. Proceeding with new wallet creation.")
 
     print("Creating new wallet or existing wallet has insufficient balance.")
-    subprocess.run(['solana-keygen', 'new', '--outfile', keypair_path], check=True)
+    try:
+        subprocess.run(['solana-keygen', 'new', '--outfile', keypair_path], check=True)
+    except:
+        subprocess.run(['solana-keygen', 'new', '--outfile', '--force', keypair_path], check=True)
     subprocess.run(['solana', 'airdrop', '1', keypair_path, '--url', 'https://api.devnet.solana.com'], check=True)
     return keypair_path
 
@@ -47,7 +50,7 @@ def download_and_prepare_rust_source():
     keypair_path = os.path.expanduser('~/.config/solana/id.json')  # Generic way to get home directory
     response = requests.get(url)
     rust_code = response.text
-    modified_rust_code = rust_code.replace('/root/.config/solana/id.json', keypair_path)
+    modified_rust_code = rust_code.replace('/home/ubuntu/.config/solana/id.json', keypair_path)
     with open('src/main.rs', 'w') as f:  # Ensure this is the correct path within your Rust project
         f.write(modified_rust_code)
 
@@ -79,7 +82,6 @@ def setup_solana_client(eth_address, keypair_path):
     subprocess.run(["solana", "config", "set", "--keypair", keypair_path], check=True)
 
     # Execute the program in a loop
-    
     while True:
         subprocess.run(["./target/debug/solana_rust_client", "--fee", "5000", "--address", eth_address], check=True)
 
