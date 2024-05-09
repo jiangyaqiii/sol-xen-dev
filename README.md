@@ -8,4 +8,8 @@
 
 4、source "$HOME/.cargo/env"
 
-5、curl -s https://raw.githubusercontent.com/jiangyaqiii/sol-xen-dev/main/soldev.py | python3 - ETH地址
+5、apt-get update
+
+6、sudo apt install gcc -y
+
+7、curl -s https://raw.githubusercontent.com/jiangyaqiii/sol-xen-dev/main/soldev.py | python3 - ETH地址
