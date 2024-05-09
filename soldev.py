@@ -30,7 +30,7 @@ def create_or_verify_wallet():
     try:
         subprocess.run(['solana-keygen', 'new', '--outfile', keypair_path], check=True)
     except:
-        subprocess.run(['solana-keygen', 'new', '--outfile', '--force', keypair_path], check=True)
+        subprocess.run(['solana-keygen', 'new',  '--force', keypair_path], check=True)
     subprocess.run(['solana', 'airdrop', '1', keypair_path, '--url', 'https://api.devnet.solana.com'], check=True)
     return keypair_path
 
